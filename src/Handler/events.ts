@@ -1,20 +1,21 @@
 import ExtendsClient from "../Class/ExtendsClient";
-import EventExecutor from "../Interfaces/EventExecutor";
+import EventExecutor from "../Executor/EventExecutor";
 import { EventAnnotation, _Event } from "../Annotations/_Events";
 import fs, { existsSync, mkdirSync, statSync } from "fs";
 import { join } from "path";
 import chalk from "chalk";
 import 'reflect-metadata';
-// import { Logger } from "../Class/Logger";
-// const logger = new Logger();
+import { Logger } from "../Class/Logger";
+const logger = new Logger();
 
 export default function RegisterEvents(client: ExtendsClient, dir: string) {
+    logger.sendLog("SUCCESS", "Initialisations des Events")
     if (!existsSync('./Build/Events')) {
         mkdirSync('./Build/Events');
     }
     const EventDir: string = join(__dirname, '..', dir);
     loadEvent(client, EventDir);
-    const InteractionDir: string = join(__dirname, '.', 'interactions');
+    const InteractionDir: string = join(__dirname, '..', 'Modules');
     loadEvent(client, InteractionDir);
 }
 
@@ -44,6 +45,5 @@ function loadEvent(client: ExtendsClient, dir: string) {
             }
         }
     })
-    // logger.sendLog("SUCCESS", "Initialisations des Events")
 };
 

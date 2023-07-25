@@ -18,10 +18,10 @@ export interface Folder {
 export interface Config {
     bot: {
         token: string;
-        id?: string;
+        id: string;
     },
     guild?: {
-        id: string;
+        id?: string;
     },
     owners?: Snowflake[];
 }

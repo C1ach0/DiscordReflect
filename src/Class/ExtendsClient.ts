@@ -5,6 +5,7 @@ import Discord, {
 } from "discord.js"
 import {ClientOptions, Folder, Config} from "../Interfaces/ClientOptions";
 import RegisterEvents from "../Handler/events";
+import RegisterCommands from "../Handler/commands";
 
 export default class ExtendsClient extends Client {
 
@@ -41,6 +42,7 @@ export default class ExtendsClient extends Client {
 
     startHandler(folder: Folder) {
         RegisterEvents(this, folder.events)
+        RegisterCommands(this, folder.commands)
     }
     
     // Methodes utilisables dans les commandes et les events

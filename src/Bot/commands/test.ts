@@ -1,10 +1,10 @@
 import ExtendsClient from "../../Class/ExtendsClient";
-import CommandExecutor from "../../Interfaces/CommandExecutor";
+import CommandExecutor from "../../Executor/CommandExecutor";
 import { _Command } from "../../Annotations/_Commands";
 import {
     ChatInputCommandInteraction
 } from "discord.js"
-import EventExecutor from "src/Interfaces/EventExecutor";
+import EventExecutor from "src/Executor/EventExecutor";
 
 @_Command({ 
     name: "test", 
@@ -18,8 +18,9 @@ import EventExecutor from "src/Interfaces/EventExecutor";
         }
     ]
 })
-export default class Ping implements CommandExecutor {
+export default class Test implements CommandExecutor {
     execute(client: ExtendsClient, interaction: ChatInputCommandInteraction) {
-        interaction.reply({content: "Pong !"})
+        const text = interaction.options.get("text").value;
+        interaction.reply({content: `${interaction.member} say : ${text}`})
     }
 }

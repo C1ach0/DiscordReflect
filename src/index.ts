@@ -1,13 +1,11 @@
 import Client from "./Class/ExtendsClient"
-import {token} from "./config.json"
+import {bot} from "./config.json"
 new Client({
     folder: {
         events: "Bot/events",
-        commands: "Bots/commands"
+        commands: "Bot/commands"
     },
     config: {
-        bot: {
-            token
-        }
+        bot
     }
 });

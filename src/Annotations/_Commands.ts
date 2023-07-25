@@ -12,6 +12,7 @@ interface CommandAnnotation {
     description: string,
     member_permission?: bigint|PermissionResolvable,
     options?: Options[];
+    enabled?: boolean;
 }
 
 

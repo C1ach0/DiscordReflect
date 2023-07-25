@@ -1,5 +1,5 @@
 import ExtendsClient from "../../Class/ExtendsClient";
-import CommandExecutor from "../../Interfaces/CommandExecutor";
+import CommandExecutor from "../../Executor/CommandExecutor";
 import { _Command } from "../../Annotations/_Commands";
 import {
     ChatInputCommandInteraction
@@ -11,6 +11,7 @@ import {
 })
 export default class Ping implements CommandExecutor {
     execute(client: ExtendsClient, interaction: ChatInputCommandInteraction) {
+        console.log(interaction)
         interaction.reply({content: "Pong !"})
     }
 }

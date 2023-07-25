@@ -1,4 +1,4 @@
-import CommandExecutor from '../Interfaces/CommandExecutor';
+import CommandExecutor from '../Executor/CommandExecutor';
 import ExtendsClient from "../Class/ExtendsClient";
 import { CommandAnnotation, _Command } from 'src/Annotations/_Commands';
 import {
@@ -11,13 +11,13 @@ import chalk from "chalk";
 import 'reflect-metadata';
 import { Routes } from 'discord-api-types/v9';
 import { REST } from '@discordjs/rest';
-// import { Logger } from "../Class/Logger";
-// const logger = new Logger();
+import { Logger } from "../Class/Logger";
+const logger = new Logger();
 
 export default function RegisterCommands(client: ExtendsClient, dir: string) {
-    if (!existsSync('./Build/Commands')) {
-        mkdirSync('./Build/Commands');
-    }
+    // if (!existsSync('./Build/Commands')) {
+    //     mkdirSync('./Build/Commands');
+    // }
     const CommandDir: string = join(__dirname, '..', dir);
     loadCommand(client, CommandDir);
 }
@@ -31,7 +31,7 @@ function loadCommand(client: ExtendsClient, dir: string) {
             loadCommand(client, filePath);
         } else if (file.endsWith('.js') || file.endsWith('.ts')) {
             const CommandClass = require(filePath).default;
-            const commandAnnotation: CommandAnnotation = Reflect.getMetadata('_Event', CommandClass);
+            const commandAnnotation: CommandAnnotation = Reflect.getMetadata('_Command', CommandClass);
             if (commandAnnotation) {
 
                 slashCommands.push({
@@ -57,16 +57,17 @@ function loadCommand(client: ExtendsClient, dir: string) {
 }
 
 async function Routing(client: ExtendsClient, slashCommands: any[]) {
-    const rest = new REST({ version: '9' }).setToken(client.Config.bot.token);
+    const rest = new REST({ version: '10' }).setToken(client.Config.bot.token);
     try {
         await rest.put(
-            client.Config.guild.id ?
-                Routes.applicationGuildCommands(client.user.id, client.Config.guild.id) :
-                Routes.applicationCommands(client.user.id),
+            client.Config?.guild?.id ?
+                Routes.applicationGuildCommands(client.Config.bot.id, client.Config?.guild?.id) :
+                Routes.applicationCommands(client.Config.bot.id),
             { body: slashCommands }
         );
+        console.log("body push", slashCommands)
     } catch (error) {
         console.log(error);
     };
-    //logger.sendLog("SUCCESS", "Initialisations des Commandes")
+    logger.sendLog("SUCCESS", "Initialisations des Commandes")
 }
