@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import Client from "./Class/ExtendsClient"
 import {bot} from "./config.json"
 new Client({

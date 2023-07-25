@@ -6,7 +6,9 @@ import { join } from "path";
 import chalk from "chalk";
 import 'reflect-metadata';
 import { Logger } from "../Class/Logger";
+import { setTimeout } from "timers/promises";
 const logger = new Logger();
+const wait = (ms: number) => setTimeout(ms);
 
 export default function RegisterEvents(client: ExtendsClient, dir: string) {
     logger.sendLog("SUCCESS", "Initialisations des Events")
@@ -28,6 +30,7 @@ function loadEvent(client: ExtendsClient, dir: string) {
             loadEvent(client, filePath);
         } else if (file.endsWith('.js') || file.endsWith('.ts')) {
             const EventClass = require(filePath).default;
+            wait(300)
             const eventAnnotation: EventAnnotation = Reflect.getMetadata('_Event', EventClass);
             if (eventAnnotation) {
                 const eventListenerInstance: EventExecutor = new EventClass();

@@ -3,7 +3,7 @@
         "lib": [
             "ESNext"
         ],
-        "module": "CommonJS",
+        "module": "commonjs",
         "moduleResolution": "node",
         "target": "ESNext",
         "outDir": "Build",
