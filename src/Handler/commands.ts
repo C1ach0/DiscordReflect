@@ -1,0 +1,72 @@
+import CommandExecutor from '../Interfaces/CommandExecutor';
+import ExtendsClient from "../Class/ExtendsClient";
+import { CommandAnnotation, _Command } from 'src/Annotations/_Commands';
+import {
+    ApplicationCommandType,
+    PermissionsBitField
+} from "discord.js";
+import fs, { existsSync, mkdirSync, statSync } from "fs";
+import { join } from "path";
+import chalk from "chalk";
+import 'reflect-metadata';
+import { Routes } from 'discord-api-types/v9';
+import { REST } from '@discordjs/rest';
+// import { Logger } from "../Class/Logger";
+// const logger = new Logger();
+
+export default function RegisterCommands(client: ExtendsClient, dir: string) {
+    if (!existsSync('./Build/Commands')) {
+        mkdirSync('./Build/Commands');
+    }
+    const CommandDir: string = join(__dirname, '..', dir);
+    loadCommand(client, CommandDir);
+}
+
+function loadCommand(client: ExtendsClient, dir: string) {
+    const slashCommands = [];
+    fs.readdirSync(dir).forEach(async (file) => {
+        const filePath = join(dir, file);
+        const stat = statSync(filePath);
+        if (stat.isDirectory()) {
+            loadCommand(client, filePath);
+        } else if (file.endsWith('.js') || file.endsWith('.ts')) {
+            const CommandClass = require(filePath).default;
+            const commandAnnotation: CommandAnnotation = Reflect.getMetadata('_Event', CommandClass);
+            if (commandAnnotation) {
+
+                slashCommands.push({
+                    name: commandAnnotation.name,
+                    description: commandAnnotation.description,
+                    type: ApplicationCommandType.ChatInput,
+                    options: commandAnnotation.options ? commandAnnotation.options : null,
+                    default_member_permissions: commandAnnotation.member_permission ? PermissionsBitField.resolve(commandAnnotation.member_permission).toString() : null
+                })
+                if(commandAnnotation.name) {
+                    client.commands.set(commandAnnotation.name, CommandClass)
+                } else {
+
+                }
+                // const eventListenerInstance: CommandExecutor = new CommandClass();
+                // console.log(chalk.green(`Command '${eventAnnotation.event}' registered.`));
+            } else {
+                // console.log(chalk.yellow(`File '${file}' does not have a valid _Command annotation.`));
+            }
+        }
+    })
+    Routing(client, slashCommands);
+}
+
+async function Routing(client: ExtendsClient, slashCommands: any[]) {
+    const rest = new REST({ version: '9' }).setToken(client.Config.bot.token);
+    try {
+        await rest.put(
+            client.Config.guild.id ?
+                Routes.applicationGuildCommands(client.user.id, client.Config.guild.id) :
+                Routes.applicationCommands(client.user.id),
+            { body: slashCommands }
+        );
+    } catch (error) {
+        console.log(error);
+    };
+    //logger.sendLog("SUCCESS", "Initialisations des Commandes")
+}
