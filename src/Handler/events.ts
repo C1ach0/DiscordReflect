@@ -30,7 +30,8 @@ function loadEvent(client: ExtendsClient, dir: string) {
             loadEvent(client, filePath);
         } else if (file.endsWith('.js') || file.endsWith('.ts')) {
             const EventClass = require(filePath).default;
-            wait(300)
+            wait(800)
+            console.log(EventClass)
             const eventAnnotation: EventAnnotation = Reflect.getMetadata('_Event', EventClass);
             if (eventAnnotation) {
                 const eventListenerInstance: EventExecutor = new EventClass();

@@ -1,6 +1,10 @@
 {
-    "bot": {
+    "bot1": {
         "token": "ODgxNjEzNTEzMDM3MDg2ODAw.GuHrWU.bBph0lQ4FMzYs0YwYuE4RMzLoJ1IQailHpPq2M",
         "id": "881613513037086800"
+    },
+    "bot2": {
+        "token": "MTEyMDA5NDMzMDc4MzI3Mjk3MQ.GaMBwF.PuGYJ9iiNru1CT2V_815L4ZRtzlaVXhVde9Dro",
+        "id": "1120094330783272971"
     }
 }

@@ -6,6 +6,7 @@ import Discord, {
 import {ClientOptions, Folder, Config} from "../Interfaces/ClientOptions";
 import RegisterEvents from "../Handler/events";
 import RegisterCommands from "../Handler/commands";
+import Node from "../Listeners/Node";
 
 export default class ExtendsClient extends Client {
 
@@ -38,19 +39,11 @@ export default class ExtendsClient extends Client {
      */
     start() {
         this.login(this.Config.bot.token);
+        Node();
     }
 
     startHandler(folder: Folder) {
         RegisterEvents(this, folder.events)
         RegisterCommands(this, folder.commands)
     }
-    
-    // Methodes utilisables dans les commandes et les events
-    getGuild(guildId: string|Discord.Snowflake): Discord.Guild {
-        return this.guilds.cache.get(guildId);
-    }
-    getChannel(guildId: string|Discord.Snowflake, channelId: string|Discord.Snowflake): Discord.GuildBasedChannel {
-        return this.getGuild(guildId).channels.cache.get(channelId);
-    }
-
 }
