@@ -27,11 +27,9 @@ export default class GuildMemberAdd implements EventExecutor {
         member.getTextChannel("1130500390727712859").send({embeds: [WelcomerEmbed]})
 
         // Send in General Channel
-        const GeneralEmbed = new EmbedBuilder()
-        .setDescription(`
-        **Bienvenue ${member.getEvent.user.username} !**
-        `);
-        member.getTextChannel("1130500401687445584").send({embeds: [GeneralEmbed]})
+        member.getTextChannel("1130500401687445584").send({
+            content: `- **Bienvenue ${member.getEvent.user.username} !** `
+        })
         member.getEvent.roles.add("1130500373090672670");
 
         // Send to MP

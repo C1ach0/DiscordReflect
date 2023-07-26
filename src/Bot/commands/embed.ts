@@ -90,6 +90,19 @@ const data = ["Default", "Green", "Blue", "Purple", "LuminousVividPink", "Gold",
             name: 'info',
             description: 'Connaitre le fonctionnement de l\'embed',
             type: 1,
+        },
+        {
+            name: 'json',
+            description: 'Envoyer un embed via le json',
+            type: 1,
+            options: [
+                {
+                    name: "json",
+                    description: "Le contenu de l'embed",
+                    type: 3,
+                    required: true
+                }
+            ]
         }
     ],
 })
@@ -146,6 +159,8 @@ note : Les mentions ne fonctionne que dans la description
             `)
                 .setImage("https://i.imgur.com/QQKWtq7.png")
             interaction.reply({ embeds: [embed] })
+        } else if (interaction.options._subcommand === "json") {
+            const embed = interaction.options.get("json").value.toString();
         }
     }
 }

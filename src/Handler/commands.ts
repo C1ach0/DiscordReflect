@@ -33,7 +33,7 @@ function loadCommand(client: ExtendsClient, dir: string) {
             const CommandClass = require(filePath).default;
             const commandAnnotation: CommandAnnotation = Reflect.getMetadata('_Command', CommandClass);
             if (commandAnnotation) {
-
+                console.log(commandAnnotation.name)
                 slashCommands.push({
                     name: commandAnnotation.name,
                     description: commandAnnotation.description,
@@ -65,7 +65,7 @@ async function Routing(client: ExtendsClient, slashCommands: any[]) {
                 Routes.applicationCommands(client.Config.bot.id),
             { body: slashCommands }
         );
-        console.log("body push", slashCommands)
+        // console.log("body push", slashCommands)
     } catch (error) {
         console.log(error);
     };

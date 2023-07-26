@@ -7,6 +7,9 @@ new Client({
         commands: "Bot/commands"
     },
     config: {
-        bot: bot2
+        bot: bot1,
+        guild: {
+            id: "1112109855277330473"
+        }
     }
 });
