@@ -18,8 +18,7 @@
         "importHelpers": true,
         "typeRoots": [
             "src/Interfaces/"
-        ],
-        "baseUrl": "."
+        ]
     },
     "include": [
         "env.d.ts",

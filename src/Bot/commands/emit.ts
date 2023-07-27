@@ -4,6 +4,7 @@ import { _Command } from "../../Annotations/_Commands";
 import {
     ChatInputCommandInteraction, GuildMember, PermissionFlagsBits
 } from "discord.js"
+import { CommandContext } from "../../Class/CommandContext";
 
 @_Command({
     name: "emit",
@@ -11,7 +12,8 @@ import {
     member_permission: PermissionFlagsBits.Administrator
 })
 export default class Emit implements CommandExecutor {
-    execute(client: ExtendsClient, interaction: ChatInputCommandInteraction) {
+    execute(client: ExtendsClient, ctx: CommandContext) {
+        const interaction = ctx.getEvent;
         if (interaction.member instanceof GuildMember) {
             client.emit("guildMemberAdd", interaction.member);
             interaction.reply({ content: "OK !", ephemeral: true })

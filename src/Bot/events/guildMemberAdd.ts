@@ -6,7 +6,7 @@ import {
     Events,
     GuildMember
 } from "discord.js"
-import ExtendsGuildMember from "../../Class/ExtendsGuildMember";
+import ExtendsGuildMember from "../../Class/Utils/ExtendsGuildMember";
 
 @_Event({event: Events.GuildMemberAdd})
 export default class GuildMemberAdd implements EventExecutor {

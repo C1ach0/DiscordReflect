@@ -1,7 +1,8 @@
 import { EmbedBuilder, PermissionFlagsBits, ApplicationCommandOptionType, ChatInputCommandInteraction } from "discord.js";
-import { _Command } from "src/Annotations/_Commands";
-import ExtendsClient from "src/Class/ExtendsClient";
-import CommandExecutor from "src/Executor/CommandExecutor";
+import { _Command } from "../../Annotations/_Commands";
+import ExtendsClient from "../../Class/ExtendsClient";
+import CommandExecutor from "../../Executor/CommandExecutor";
+import { CommandContext } from "../../Class/CommandContext";
 
 @_Command({
     name: "eval",
@@ -16,7 +17,8 @@ import CommandExecutor from "src/Executor/CommandExecutor";
     ]
 })
 export default class Eval implements CommandExecutor {
-    async execute(client: ExtendsClient, interaction: ChatInputCommandInteraction) {
+    async execute(client: ExtendsClient, ctx: CommandContext) {
+        const interaction = ctx.getEvent;
         const script = interaction.options.get("script").value.toString();
         const evalEmbed = new EmbedBuilder().setFooter({ text: interaction.user.username, iconURL: interaction.user.displayAvatarURL() });
         let description = `    
@@ -27,9 +29,6 @@ __Return :__
         `
         try {
             let evaled = eval(script);
-            if (typeof evaled !== 'string') {
-                evaled = require('util').inspect(evaled);
-            }
             evalEmbed.setDescription(description + `
 \`\`\`js
 ${evaled}

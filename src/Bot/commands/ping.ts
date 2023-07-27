@@ -5,13 +5,15 @@ import {
     ChatInputCommandInteraction,
     EmbedBuilder
 } from "discord.js"
+import { CommandContext } from "../../Class/CommandContext";
 
 @_Command({
     name: "ping",
     description: "Pong !"
 })
 export default class Ping implements CommandExecutor {
-    execute(client: ExtendsClient, interaction: ChatInputCommandInteraction) {
+    execute(client: ExtendsClient, ctx: CommandContext) {
+        const interaction = ctx.getEvent;
         interaction.reply({ content: "Calcul en cours..." }).then(m4 => {
             const latency = Math.floor(Date.now() - interaction.createdTimestamp)
             const readyTimestampInSeconds = Math.floor(client.readyTimestamp / 1000);

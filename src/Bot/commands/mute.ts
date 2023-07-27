@@ -8,6 +8,7 @@ import {
     ApplicationCommandOptionType
 } from "discord.js"
 import ms from "ms";
+import { CommandContext } from "../../Class/CommandContext";
 
 @_Command({ 
     name: "mute", 
@@ -73,19 +74,20 @@ import ms from "ms";
     ]
 })
 export default class Mute implements CommandExecutor {
-    execute(client: ExtendsClient, interaction: any) {
-        console.log(interaction)
-        if(interaction.options._subcommand == "temporairement") {
-        const user = interaction.options.get("membre").user;
-        const target = interaction.guild.members.cache.get(user.id);
-        const delay = ms(interaction.options.get("temps").value); // 1d -> 86.400.000ms
-        const rson = interaction.options.get("raison").value;
-        const reason = `${rson} | Par ${interaction.member.user.username}`
+    execute(client: ExtendsClient, ctx: CommandContext) {
+    //     const interaction = ctx.getEvent;
+    //     console.log(interaction)
+    //     if(interaction.options._subcommand == "temporairement") {
+    //     const user = interaction.options.get("membre").user;
+    //     const target = interaction.guild.members.cache.get(user.id);
+    //     const delay = ms(interaction.options.get("temps").value); // 1d -> 86.400.000ms
+    //     const rson = interaction.options.get("raison").value;
+    //     const reason = `${rson} | Par ${interaction.member.user.username}`
 
-        try {
-            target.timeout(delay, reason)
-        } catch {}
-       }
+    //     try {
+    //         target.timeout(delay, reason)
+    //     } catch {}
+    //    }
     }
 }
 

@@ -21,6 +21,7 @@ interface Options {
     description: string;
     type: number|ApplicationCommandOptionType;
     required?: boolean;
+    autocomplete?: boolean;
     options?: Options[]
 }
 

@@ -1,10 +1,7 @@
 import ExtendsClient from "../../Class/ExtendsClient";
 import CommandExecutor from "../../Executor/CommandExecutor";
 import { _Command } from "../../Annotations/_Commands";
-import {
-    ChatInputCommandInteraction
-} from "discord.js"
-import EventExecutor from "src/Executor/EventExecutor";
+import { CommandContext } from "../../Class/CommandContext";
 
 @_Command({ 
     name: "test", 
@@ -19,7 +16,8 @@ import EventExecutor from "src/Executor/EventExecutor";
     ]
 })
 export default class Test implements CommandExecutor {
-    execute(client: ExtendsClient, interaction: ChatInputCommandInteraction) {
+    execute(client: ExtendsClient, ctx: CommandContext) {
+        const interaction = ctx.getEvent;
         const text = interaction.options.get("text").value;
         interaction.reply({content: `${interaction.member} say : ${text}`})
     }

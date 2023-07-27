@@ -1,11 +1,11 @@
 import CommandExecutor from '../Executor/CommandExecutor';
 import ExtendsClient from "../Class/ExtendsClient";
-import { CommandAnnotation, _Command } from 'src/Annotations/_Commands';
+import { CommandAnnotation, _Command } from '../Annotations/_Commands';
 import {
     ApplicationCommandType,
     PermissionsBitField
 } from "discord.js";
-import fs, { existsSync, mkdirSync, statSync } from "fs";
+import fs, { statSync } from "fs";
 import { join } from "path";
 import chalk from "chalk";
 import 'reflect-metadata';
@@ -33,7 +33,6 @@ function loadCommand(client: ExtendsClient, dir: string) {
             const CommandClass = require(filePath).default;
             const commandAnnotation: CommandAnnotation = Reflect.getMetadata('_Command', CommandClass);
             if (commandAnnotation) {
-                console.log(commandAnnotation.name)
                 slashCommands.push({
                     name: commandAnnotation.name,
                     description: commandAnnotation.description,
@@ -44,13 +43,15 @@ function loadCommand(client: ExtendsClient, dir: string) {
                 if(commandAnnotation.name) {
                     client.commands.set(commandAnnotation.name, CommandClass)
                 } else {
-
+                    console.log("no name")
                 }
                 // const eventListenerInstance: CommandExecutor = new CommandClass();
-                // console.log(chalk.green(`Command '${eventAnnotation.event}' registered.`));
+                console.log(chalk.green(`Command '${commandAnnotation.name}' registered.`));
             } else {
-                // console.log(chalk.yellow(`File '${file}' does not have a valid _Command annotation.`));
+                console.log(chalk.yellow(`File '${file}' does not have a valid _Command annotation.`));
             }
+        } else {
+            console.log("pas lu : ", file)
         }
     })
     Routing(client, slashCommands);

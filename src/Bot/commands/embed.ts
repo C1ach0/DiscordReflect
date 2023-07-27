@@ -4,6 +4,7 @@ import { _Command } from "../../Annotations/_Commands";
 import {
     ChatInputCommandInteraction, EmbedBuilder, PermissionFlagsBits, ApplicationCommandOptionType
 } from "discord.js"
+import { CommandContext } from "../../Class/CommandContext";
 
 const data = ["Default", "Green", "Blue", "Purple", "LuminousVividPink", "Gold", "Orange", "Red", "Grey", "LightGrey", "Navy", "Yellow", "Aqua", "White", "Greyple", "Black", "Blurple", "Green", "Yellow", "Fuchsia", "Red"]
 
@@ -107,8 +108,9 @@ const data = ["Default", "Green", "Blue", "Purple", "LuminousVividPink", "Gold",
     ],
 })
 export default class Embed implements CommandExecutor {
-    execute(client: ExtendsClient, interaction: any) {
-        if (interaction.options._subcommand === 'create') {
+    execute(client: ExtendsClient, ctx: CommandContext) {
+        const interaction = ctx.getEvent;
+        if (interaction.options.getSubcommand() === 'create') {
             const channelId = interaction.options.get("channel").channel.id;
             const channel = interaction.guild.channels.cache.get(channelId);
             const author = interaction.options.get("author")?.value.toString();
@@ -139,7 +141,7 @@ export default class Embed implements CommandExecutor {
             }
 
         }
-        else if (interaction.options._subcommand === 'info') {
+        else if (interaction.options.getSubcommand() === 'info') {
             const embed = new EmbedBuilder()
                 .setTitle("Informations sur la création d'un Embed")
                 .setDescription(`
@@ -159,7 +161,7 @@ note : Les mentions ne fonctionne que dans la description
             `)
                 .setImage("https://i.imgur.com/QQKWtq7.png")
             interaction.reply({ embeds: [embed] })
-        } else if (interaction.options._subcommand === "json") {
+        } else if (interaction.options.getSubcommand() === "json") {
             const embed = interaction.options.get("json").value.toString();
         }
     }

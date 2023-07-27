@@ -1,13 +1,12 @@
-import { CommandAnnotation } from "src/Annotations/_Commands";
 import { _Event } from "../Annotations/_Events";
 import ExtendsClient from "../Class/ExtendsClient";
 import EventExecutor from "../Executor/EventExecutor";
-import CommandExecutor from "src/Executor/CommandExecutor";
+import CommandExecutor from "../Executor/CommandExecutor";
+import { CommandContext } from "../Class/CommandContext";
 import {
   Interaction
 } from "discord.js"
-
-//const eventListenerInstance: EventListener = new EventClass();
+import AutoCompletion from "../Executor/AutoCompletion";
 
 @_Event({ event: "interactionCreate" })
 export default class InteractionCreate implements EventExecutor {
@@ -16,8 +15,15 @@ export default class InteractionCreate implements EventExecutor {
       const command = client.commands.get(interaction.commandName);
       if (!command) return;
       const commandInstance: CommandExecutor = new command();
-      // const commandAnnotation: CommandAnnotation = Reflect.getMetadata('_Event', command);
-      commandInstance.execute(client, interaction)
+      commandInstance.execute(client, new CommandContext(interaction))
+    } else if (interaction.isAutocomplete()) {
+      const command = client.commands.get(interaction.commandName);
+      if(!command) return;
+      const commandInstance: AutoCompletion = new command();
+      if(!commandInstance.autoCompletion) return;
+      commandInstance.autoCompletion(interaction, [])
+    } else if (interaction.isButton()) {
+      const button = client.buttons.get(interaction.component.label)
     }
   }
 }

@@ -2,7 +2,7 @@ import {
     GuildMember, Snowflake
 } from "discord.js";
 
-import ExtendsChannel from "./Utils/ExtendsChannel";
+import ExtendsChannel from "./ExtendsChannel";
 
 export default class ExtendsGuildMember extends ExtendsChannel {
     private event: GuildMember;
