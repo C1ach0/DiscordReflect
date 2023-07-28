@@ -1,20 +1,15 @@
 import ExtendsClient from "../Class/ExtendsClient";
 import EventExecutor from "../Executor/EventExecutor";
 import { EventAnnotation, _Event } from "../Annotations/_Events";
-import fs, { existsSync, mkdirSync, statSync } from "fs";
+import fs, { statSync } from "fs";
 import { join } from "path";
 import chalk from "chalk";
 import 'reflect-metadata';
 import { Logger } from "../Class/Logger";
-import { setTimeout } from "timers/promises";
 const logger = new Logger();
-const wait = (ms: number) => setTimeout(ms);
 
 export default function RegisterEvents(client: ExtendsClient, dir: string) {
     logger.sendLog("SUCCESS", "Initialisations des Events")
-    if (!existsSync('./Build/Events')) {
-        mkdirSync('./Build/Events');
-    }
     const EventDir: string = join(__dirname, '..', dir);
     loadEvent(client, EventDir);
     const InteractionDir: string = join(__dirname, '..', 'Modules');
@@ -30,8 +25,6 @@ function loadEvent(client: ExtendsClient, dir: string) {
             loadEvent(client, filePath);
         } else if (file.endsWith('.js') || file.endsWith('.ts')) {
             const EventClass = require(filePath).default;
-            wait(800)
-            console.log(EventClass)
             const eventAnnotation: EventAnnotation = Reflect.getMetadata('_Event', EventClass);
             if (eventAnnotation) {
                 const eventListenerInstance: EventExecutor = new EventClass();
@@ -43,9 +36,9 @@ function loadEvent(client: ExtendsClient, dir: string) {
                         console.error(`Error executing event '${eventAnnotation.event}':`, error);
                     }
                 });
-                // console.log(chalk.green(`Event Listener '${eventAnnotation.event}' registered.`));
+                console.log(chalk.green(`Event Listener '${eventAnnotation.event}' registered.`));
             } else {
-                // console.log(chalk.yellow(`File '${file}' does not have a valid _Event annotation.`));
+                console.log(chalk.yellow(`File '${file}' does not have a valid _Event annotation.`));
             }
         }
     })

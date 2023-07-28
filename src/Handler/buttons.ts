@@ -3,12 +3,12 @@ import fs, { statSync } from "fs";
 import { join } from "path";
 import chalk from "chalk";
 import 'reflect-metadata';
-import { Routes } from 'discord-api-types/v9';
-import { REST } from '@discordjs/rest';
 import { Logger } from "../Class/Logger";
+import { ButtonAnnotation } from "../Annotations/_Buttons";
 const logger = new Logger();
 
 export default function RegisterButtons(client: ExtendsClient, dir: string) {
+    logger.sendLog("SUCCESS", "Initialisations des Boutons")
     const ButtonDir: string = join(__dirname, '..', dir);
     LoadButton(client, ButtonDir)
 }
@@ -21,7 +21,15 @@ function LoadButton(client: ExtendsClient, dir: string) {
             LoadButton(client, filePath);
         } else if (file.endsWith(".js") || file.endsWith(".ts")) {
             const ButtonClass = require(filePath).default;
-            const buttonAnnotations = Reflect.getMetadata('_Command', ButtonClass);
+            const buttonAnnotations: ButtonAnnotation = Reflect.getMetadata('_Button', ButtonClass);
+            // const multiButtonAnnotations: ButtonAnnotation[] = Reflect.getMetadata('_MultiButton', ButtonClass);
+            client.buttons.set(buttonAnnotations.buttonId, ButtonClass)
+            console.log(chalk.green(`Button '${buttonAnnotations.buttonId}' registered.`));
+            // else if (multiButtonAnnotations) {
+            //     multiButtonAnnotations.forEach(btn => {
+            //         client.buttons.set(btn.buttonId, ButtonClass)
+            //     })
+            // }
         }
     })
 }

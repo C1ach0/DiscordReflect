@@ -7,6 +7,7 @@ import {
   Interaction
 } from "discord.js"
 import AutoCompletion from "../Executor/AutoCompletion";
+import { ButtonExecutor } from "../Executor/ButtonExecutor";
 
 @_Event({ event: "interactionCreate" })
 export default class InteractionCreate implements EventExecutor {
@@ -21,9 +22,12 @@ export default class InteractionCreate implements EventExecutor {
       if(!command) return;
       const commandInstance: AutoCompletion = new command();
       if(!commandInstance.autoCompletion) return;
-      commandInstance.autoCompletion(interaction, [])
+      commandInstance.autoCompletion(interaction, []);
     } else if (interaction.isButton()) {
-      const button = client.buttons.get(interaction.component.label)
+      const button = client.buttons.get(interaction.customId)
+      if(!button) return;
+      const buttonInstance: ButtonExecutor = new button();
+      buttonInstance.execute(client, interaction);
     }
   }
 }

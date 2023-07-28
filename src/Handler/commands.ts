@@ -15,9 +15,7 @@ import { Logger } from "../Class/Logger";
 const logger = new Logger();
 
 export default function RegisterCommands(client: ExtendsClient, dir: string) {
-    // if (!existsSync('./Build/Commands')) {
-    //     mkdirSync('./Build/Commands');
-    // }
+    logger.sendLog("SUCCESS", "Initialisations des Commandes")
     const CommandDir: string = join(__dirname, '..', dir);
     loadCommand(client, CommandDir);
 }
@@ -58,7 +56,7 @@ function loadCommand(client: ExtendsClient, dir: string) {
 }
 
 async function Routing(client: ExtendsClient, slashCommands: any[]) {
-    const rest = new REST({ version: '10' }).setToken(client.Config.bot.token);
+    const rest = new REST({ version: '10' }).setToken(client.token);
     try {
         await rest.put(
             client.Config?.guild?.id ?
@@ -70,5 +68,5 @@ async function Routing(client: ExtendsClient, slashCommands: any[]) {
     } catch (error) {
         console.log(error);
     };
-    logger.sendLog("SUCCESS", "Initialisations des Commandes")
 }
+
