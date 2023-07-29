@@ -18,9 +18,8 @@ import { CommandContext } from "../../Class/CommandContext";
 })
 export default class Eval implements CommandExecutor {
     async execute(client: ExtendsClient, ctx: CommandContext) {
-        const interaction = ctx.getEvent;
-        const script = interaction.options.get("script").value.toString();
-        const evalEmbed = new EmbedBuilder().setFooter({ text: interaction.user.username, iconURL: interaction.user.displayAvatarURL() });
+        const script = ctx.getOption("script").value.toString();
+        const evalEmbed = new EmbedBuilder().setFooter({ text: ctx.getUser.username, iconURL: ctx.getUser.displayAvatarURL() });
         let description = `    
 \`\`\`js
 ${script}
@@ -34,14 +33,14 @@ __Return :__
 ${evaled}
 \`\`\`
             `)
-            interaction.reply({ embeds: [evalEmbed] })
+            ctx.reply({ embeds: [evalEmbed] })
         } catch (err) {
             evalEmbed.setDescription(description+`
 \`\`\`xl
 ${err}
 \`\`\`
             `)
-            interaction.reply({embeds: [evalEmbed]})
+            ctx.reply({embeds: [evalEmbed]})
         }
     }
 }
