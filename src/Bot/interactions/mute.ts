@@ -1,16 +1,16 @@
 import ExtendsClient from "../../Class/ExtendsClient";
-// import { CommandContext } from "src/Class/CommandContext";
-import CommandExecutor from "../../Executor/CommandExecutor";
-import { _Command } from "../../Annotations/_Commands";
+// import { InteractionCommandContext } from "src/Class/CommandContext";
+import CommandExecutor from "../../Executor/InteractionCommandExecutor";
+import { _InteractionCommand } from "../../Annotations/_InteractionCommands";
 import {
     ChatInputCommandInteraction,
     CommandInteraction,
     ApplicationCommandOptionType
 } from "discord.js"
 import ms from "ms";
-import { CommandContext } from "../../Class/CommandContext";
+import { InteractionCommandContext } from "../../Class/InteractionCommandContext";
 
-@_Command({ 
+@_InteractionCommand({ 
     name: "mute", 
     description: "Rendre muet un membre",
     options: [
@@ -74,7 +74,7 @@ import { CommandContext } from "../../Class/CommandContext";
     ]
 })
 export default class Mute implements CommandExecutor {
-    execute(client: ExtendsClient, ctx: CommandContext) {
+    execute(client: ExtendsClient, ctx: InteractionCommandContext) {
     //     const interaction = ctx.getEvent;
     //     console.log(interaction)
     //     if(interaction.options._subcommand == "temporairement") {

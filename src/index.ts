@@ -5,7 +5,10 @@ new Client({
     folder: {
         events: "Bot/events",
         commands: "Bot/commands",
-        buttons: "Bot/buttons"
+        interactions: {
+            buttons: "Bot/buttons",
+            commands: "Bot/interactions"
+        }
     },
     config: {
         bot: bot1,

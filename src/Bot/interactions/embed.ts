@@ -1,14 +1,14 @@
 import ExtendsClient from "../../Class/ExtendsClient";
-import CommandExecutor from "../../Executor/CommandExecutor";
-import { _Command } from "../../Annotations/_Commands";
+import CommandExecutor from "../../Executor/InteractionCommandExecutor";
+import { _InteractionCommand } from "../../Annotations/_InteractionCommands";
 import {
     ChatInputCommandInteraction, EmbedBuilder, PermissionFlagsBits, ApplicationCommandOptionType
 } from "discord.js"
-import { CommandContext } from "../../Class/CommandContext";
+import { InteractionCommandContext } from "../../Class/InteractionCommandContext";
 
 const data = ["Default", "Green", "Blue", "Purple", "LuminousVividPink", "Gold", "Orange", "Red", "Grey", "LightGrey", "Navy", "Yellow", "Aqua", "White", "Greyple", "Black", "Blurple", "Green", "Yellow", "Fuchsia", "Red"]
 
-@_Command({
+@_InteractionCommand({
     name: "embed",
     description: "Créer un message embed",
     member_permission: PermissionFlagsBits.ManageMessages,
@@ -108,7 +108,7 @@ const data = ["Default", "Green", "Blue", "Purple", "LuminousVividPink", "Gold",
     ],
 })
 export default class Embed implements CommandExecutor {
-    execute(client: ExtendsClient, ctx: CommandContext) {
+    execute(client: ExtendsClient, ctx: InteractionCommandContext) {
         const interaction = ctx.getEvent;
         if (interaction.options.getSubcommand() === 'create') {
             const channelId = interaction.options.get("channel").channel.id;

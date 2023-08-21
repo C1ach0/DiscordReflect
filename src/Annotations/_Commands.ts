@@ -1,29 +1,15 @@
 import 'reflect-metadata';
-import {
-    ApplicationCommandOptionType,
-    PermissionResolvable
-
-} from "discord.js";
 
 
 // Define the CommandAnnotation interface
 interface CommandAnnotation {
-    name: string,
-    description: string,
-    member_permission?: bigint|PermissionResolvable,
-    options?: Options[];
+    name: string;
+    aliases?: string[];
+    description: string;
+    usage?: string;
     enabled?: boolean;
 }
 
-
-interface Options {
-    name: string;
-    description: string;
-    type: number|ApplicationCommandOptionType;
-    required?: boolean;
-    autocomplete?: boolean;
-    options?: Options[]
-}
 
 // Define the _Command decorator
 function _Command(options: CommandAnnotation) {
@@ -32,5 +18,5 @@ function _Command(options: CommandAnnotation) {
     };
 }
 
-// Export the CommandAnnotation interface and _Command decorator
+// Export the CommandAnnotation interface and _InteractionCommand decorator
 export { CommandAnnotation, _Command };

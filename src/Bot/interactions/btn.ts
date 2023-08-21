@@ -1,18 +1,18 @@
-import { _Command } from "../../Annotations/_Commands";
-import { CommandContext } from "../../Class/CommandContext";
+import { _InteractionCommand } from "../../Annotations/_InteractionCommands";
+import { InteractionCommandContext } from "../../Class/InteractionCommandContext";
 import ExtendsClient from "../../Class/ExtendsClient";
-import CommandExecutor from "../../Executor/CommandExecutor";
+import CommandExecutor from "../../Executor/InteractionCommandExecutor";
 import {
     ActionRowBuilder,
     ButtonBuilder, ButtonStyle
 } from "discord.js";
 
-@_Command({
+@_InteractionCommand({
     name: "btnsend",
     description: "Envoyer un bouton pour le test"
 })
 export default class BtnSend implements CommandExecutor {
-    execute(client: ExtendsClient, ctx: CommandContext) {
+    execute(client: ExtendsClient, ctx: InteractionCommandContext) {
         const click = new ButtonBuilder()
         .setCustomId("btn1")
         .setLabel("Click")

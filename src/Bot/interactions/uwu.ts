@@ -1,12 +1,12 @@
 import { AutocompleteInteraction, ApplicationCommandOptionChoiceData } from "discord.js";
-import { _Command } from "../../Annotations/_Commands";
-import { CommandContext } from "../../Class/CommandContext";
+import { _InteractionCommand } from "../../Annotations/_InteractionCommands";
+import { InteractionCommandContext } from "../../Class/InteractionCommandContext";
 import ExtendsClient from "../../Class/ExtendsClient";
-import CommandExecutor from "../../Executor/CommandExecutor";
+import CommandExecutor from "../../Executor/InteractionCommandExecutor";
 import AutoCompletion, { Choices } from "../../Executor/AutoCompletion";
 
 
-@_Command({
+@_InteractionCommand({
     name: "uwu",
     description: "send uwu",
     options: [
@@ -29,7 +29,7 @@ export default class UwU implements CommandExecutor, AutoCompletion {
         interaction.respond(choices).catch(console.error)
     }
 
-    execute(client: ExtendsClient, ctx: CommandContext) {
+    execute(client: ExtendsClient, ctx: InteractionCommandContext) {
         const nb = ctx.getOption("nb").value;
         ctx.reply({ content: `UwU ${nb} !`, ephemeral: true })
     }

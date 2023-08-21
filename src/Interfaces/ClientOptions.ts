@@ -11,7 +11,10 @@ export interface ClientOptions {
 
 export interface Folder {
     commands?: string,
-    buttons?: string,
+    interactions?: {
+        commands?: string;
+        buttons?: string;
+    },
     events?: string,
 }
 

@@ -1,4 +1,4 @@
-import { CommandContext } from "../Class/CommandContext";
+import { InteractionCommandContext } from "../Class/InteractionCommandContext";
 import ExtendsClient from "../Class/ExtendsClient";
 import {
     AutocompleteInteraction,

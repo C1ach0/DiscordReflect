@@ -6,6 +6,7 @@ import Discord, {
 import {ClientOptions, Folder, Config} from "../Interfaces/ClientOptions";
 import RegisterEvents from "../Handler/events";
 import RegisterCommands from "../Handler/commands";
+import RegisternteractionCommands from "../Handler/interactionCommand";
 import RegisterButtons from "../Handler/buttons";
 import Node from "../Listeners/Node";
 
@@ -46,7 +47,8 @@ export default class ExtendsClient extends Client {
 
     startHandler(folder: Folder) {
         if(folder.events) RegisterEvents(this, folder.events);
-        if(folder.commands) RegisterCommands(this, folder.commands);
-        if(folder.buttons) RegisterButtons(this, folder.buttons);
+        // if(folder.commands) RegisterCommands(this, folder.commands);
+        if(folder.interactions.commands) RegisternteractionCommands(this, folder.interactions.commands);
+        if(folder.interactions.buttons) RegisterButtons(this, folder.interactions.buttons);
     }
 }

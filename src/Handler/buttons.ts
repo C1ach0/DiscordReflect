@@ -8,7 +8,7 @@ import { ButtonAnnotation } from "../Annotations/_Buttons";
 const logger = new Logger();
 
 export default function RegisterButtons(client: ExtendsClient, dir: string) {
-    logger.sendLog("SUCCESS", "Initialisations des Boutons")
+    logger.sendLog("SUCCESS", "Initializations of interactions buttons")
     const ButtonDir: string = join(__dirname, '..', dir);
     LoadButton(client, ButtonDir)
 }

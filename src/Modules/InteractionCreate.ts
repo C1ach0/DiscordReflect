@@ -1,8 +1,8 @@
 import { _Event } from "../Annotations/_Events";
 import ExtendsClient from "../Class/ExtendsClient";
 import EventExecutor from "../Executor/EventExecutor";
-import CommandExecutor from "../Executor/CommandExecutor";
-import { CommandContext } from "../Class/CommandContext";
+import InteractionCommandExecutor from "../Executor/InteractionCommandExecutor";
+import { InteractionCommandContext } from "../Class/InteractionCommandContext";
 import {
   Interaction
 } from "discord.js"
@@ -15,8 +15,8 @@ export default class InteractionCreate implements EventExecutor {
     if (interaction.isChatInputCommand()) {
       const command = client.commands.get(interaction.commandName);
       if (!command) return;
-      const commandInstance: CommandExecutor = new command();
-      commandInstance.execute(client, new CommandContext(interaction))
+      const commandInstance: InteractionCommandExecutor = new command();
+      commandInstance.execute(client, new InteractionCommandContext(interaction))
     } else if (interaction.isAutocomplete()) {
       const command = client.commands.get(interaction.commandName);
       if(!command) return;

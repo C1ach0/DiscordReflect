@@ -1,18 +1,18 @@
 import ExtendsClient from "../../Class/ExtendsClient";
-import CommandExecutor from "../../Executor/CommandExecutor";
-import { _Command } from "../../Annotations/_Commands";
+import CommandExecutor from "../../Executor/InteractionCommandExecutor";
+import { _InteractionCommand } from "../../Annotations/_InteractionCommands";
 import {
     ChatInputCommandInteraction,
     EmbedBuilder
 } from "discord.js"
-import { CommandContext } from "../../Class/CommandContext";
+import { InteractionCommandContext } from "../../Class/InteractionCommandContext";
 
-@_Command({
+@_InteractionCommand({
     name: "ping",
     description: "Pong !"
 })
 export default class Ping implements CommandExecutor {
-    execute(client: ExtendsClient, ctx: CommandContext) {
+    execute(client: ExtendsClient, ctx: InteractionCommandContext) {
         const interaction = ctx.getEvent;
         interaction.reply({ content: "Calcul en cours..." }).then(m4 => {
             const latency = Math.floor(Date.now() - interaction.createdTimestamp)
